@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercadinho Piratininga</title>
+    <!-- Atualizando para a versão mais recente do Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #4f97db, #003366); /* Gradiente suave */
+            color: #fff;
+            line-height: 1.6;
+            padding-top: 70px;
+            padding-bottom: 70px;
+            transition: background 0.3s ease;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #004080; /* Azul */
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 2.8rem;
+            font-weight: bold;
+            z-index: 1000;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            text-transform: uppercase;
+        }
+
+        .conteudo {
+            padding: 20px;
+            max-width: 900px;
+            margin: 120px auto;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: left; /* Alinhando o texto à esquerda */
+            padding: 25px;
+            background-color: #fafafa;
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .container h1 {
+            font-size: 2.5rem;
+            margin-bottom: 25px;
+            color: #004080; /* Azul */
+            font-weight: bold;
+            text-transform: capitalize;
+        }
+
+        .input-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 15px 15px 15px 45px; /* Espaço para o ícone */
+            border: 2px solid #ccc;
+            border-radius: 25px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            border-color: #004080; /* Azul quando focado */
+            outline: none;
+            box-shadow: 0 0 8px rgba(0, 80, 128, 0.6); /* Sombra suave */
+        }
+
+        input[type="text"]::before {
+            content: '\f002'; /* Código do ícone de lupa */
+            font-family: 'Font Awesome 6 Free'; /* Usando a versão mais recente do Font Awesome */
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            color: #004080;
+        }
+
+        button {
+            padding: 14px 25px;
+            background-color: #B71617; /* Cor do botão */
+            color: white;
+            border: 2px solid #B71617;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            transition: background-color 0.3s ease, transform 0.3s ease-in-out;
+        }
+
+        button i {
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background-color: #e14d28; /* Tom mais escuro de #ff5733 */
+            transform: scale(1.05); /* Efeito de aumento */
+            border-color: #e14d28; /* Cor da borda também muda */
+        }
+
+        .resultado, .erro {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            color: black;
+            text-align: left;
+            font-size: 1.1rem;
+        }
+
+        .resultado {
+            background-color: #e3f2fd;
+            border: 2px solid #90caf9;
+        }
+
+        .erro {
+            background-color: #ffebee;
+            border: 2px solid #f44336;
+            color: #f44336;
+        }
+
+        .whatsapp-link {
+            position: fixed;
+            bottom: 80px;
+            right: 30px;
+            background-color: #25D366;
+            color: white;
+            padding: 15px;
+            border-radius: 50%;
+            font-size: 28px;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+        }
+
+        .whatsapp-link:hover {
+            background-color: #128C7E;
+            transform: scale(1.1);
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #004080;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 1rem;
+            z-index: 1000;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Media Queries para Responsividade */
+        @media (max-width: 768px) {
+            header {
+                font-size: 2.2rem;
+                padding: 15px 0;
+            }
+
+            .conteudo {
+                margin: 80px 20px;
+                padding: 20px;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            .container h1 {
+                font-size: 2rem;
+            }
+
+            input[type="text"] {
+                font-size: 1rem;
+                padding: 12px 12px 12px 40px; /* Ajuste do padding */
+            }
+
+            button {
+                padding: 12px 22px;
+                font-size: 1rem;
+            }
+
+            .whatsapp-link {
+                bottom: 70px;
+                right: 20px;
+                font-size: 26px;
+            }
+
+            footer {
+                font-size: 0.9rem;
+                padding: 15px 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                font-size: 1.8rem;
+                padding: 10px 0;
+            }
+
+            .conteudo {
+                margin: 60px 10px;
+                padding: 15px;
+            }
+
+            input[type="text"] {
+                font-size: 0.9rem;
+                padding: 10px 10px 10px 30px;
+            }
+
+            button {
+                padding: 10px 18px;
+                font-size: 0.9rem;
+            }
+
+            footer {
+                font-size: 0.8rem;
+                padding: 12px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    Mercadinho Piratininga
+</header>
+
+<div class="conteudo">
+    <div class="container">
+        <h1>Busca de Ramais</h1>
+        <div class="input-container">
+            <input type="text" id="nomeUsuario" placeholder="Digite o nome do usuário" onkeypress="verificarEnter(event)">
+        </div>
+        <button onclick="buscarUsuario()">
+            <i class="fas fa-search"></i> Buscar
+        </button>
+
+        <div id="resultado"></div>
+    </div>
+</div>
+
+<!-- Ícone do WhatsApp que leva para uma conversa -->  
+<a href="https://wa.me/5512992527180?text=Olá,%20tire%20suas%20dúvidas." target="_blank" class="whatsapp-link">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+<footer>
+    &copy; 2025 - Desenvolvido por Eli Santos. Todos os direitos reservados.
+</footer>
+
+<script>
+    const usuarios = [
+          {
+            nome: "CPD",
+            ramal: "2738",
+            Whatsapp:"",
+            loja: "Jardim Paulista - Matriz",
+            departamento: "CPD - Centro de Processamento de Dados",
+            Teams:"" ,
+            Webex: ""
+        },
+        {
+            nome: "CAMPOS",
+            ramal: "3664-6336",
+            Whatsapp:"(12)98113-2381",
+            loja: "Campos do Jordão - Matriz",
+            departamento: "Balcão de Atendimento",
+            Teams:"" ,
+            Webex: ""
+        },
+        {
+            nome: "Vagner",
+            ramal: "",
+            Whatsapp:"12996412579",
+            loja: "Caraguá - Loja 05",
+            departamento: "Gerência",
+            Teams:"" ,
+            Webex: ""
+        },
+         {
+            nome: "Cassia",
+            ramal: "3668-6902",
+            Whatsapp:"",
+            loja: "Campos - Loja 03",
+            departamento: "Escritório",
+            Teams:"" ,
+            Webex: ""
+        },
+         {
+            nome: "Ana",
+            ramal: "2747",
+            Whatsapp:"",
+            loja: "Jardim Paulista - Loja 01",
+            departamento: "Contas a pagar",
+            Teams:"inanceiromatriz171@outlook.com" ,
+            Webex: "inanceiromatriz171@outlook.com"
+        },
+         {
+            nome: "Leonardo",           
+            ramal: "(12)39717672",
+            Whatsapp:"",
+            loja: "São Bento - Loja 09",
+            departamento: "Recebimento",
+            Teams:"" ,
+            Webex: ""
+        },
+        {
+            nome: "FrenteCaixaCampos",           
+            ramal: "(12)3668-6900",
+            Whatsapp:"(12)8113-2381",
+            loja: "Campos - Loja 02",
+            departamento: "Frente de caixa",
+            Teams:"" ,
+            Webex: ""
+        },
+         {
+            nome: "Larissa",
+            ramal: "3668-6905",
+            Whatsapp:"",
+            loja: "Campos - Loja 03",
+            departamento: "Escritório",
+            Teams:"" ,
+            Webex: ""
+        },
+         {
+            nome: "Samanta",
+            ramal: "3668-6903",
+            Whatsapp:"",
+            loja: "Campos - Loja 03",
+            departamento: "Escritório",
+            Teams:"" ,
+            Webex: ""
+        },
+        {
+            nome: "Marta",
+            ramal: "",
+            Whatsapp:"12997796179",
+            loja: "Paraibuna - Loja 04",
+            departamento: "RH - Recursos Humanos",
+            Teams:"" ,
+            Webex: ""
+        },
+        {
+            nome: "Juliano",
+            ramal: "",
+            Whatsapp:"12997676757",
+            loja: "Jardim Satélite - Loja 02",
+            departamento: "Gerência - Gerente",
+            Teams:"" ,
+            Webex: ""
+        },
+        {
+            nome: "Dival",
+            ramal: "",
+            Whatsapp:"12981455533",
+            loja: "Campos do Jordão - Loja 03",
+            departamento: "Gerência- Gerente",
+            Teams:"" ,
+            Webex: ""
+        },
+        {
+            nome: "Recebimento",
+            ramal: "",
+            Whatsapp:"12997674586",
+            loja: "Campos do Jordão - Loja 03",
+            departamento: "Recebimento",
+            Teams:"" ,
+            Webex: ""
+        },
+         {
+            nome: "Silvio",
+            ramal: "",
+            Whatsapp:"12981228226",
+            loja: "Jardim Paulista - Loja 01",
+            departamento: "Gerência- Gerente",
+            Teams:"" ,
+            Webex: ""
+        },
+        {
+            nome: "Angélica",
+            ramal: "2753",
+            Whatsapp:"",
+            loja: "Jardim Paulista - Matriz",
+            departamento: "Contabilidade",
+            Teams:"contabilidadematriz178@hotmail.com" ,
+            Webex: "contabilidadematriz178@hotmail.com"
+        },
+         {
+            nome: "Felipe",
+            ramal: "2747",
+            Whatsapp:"",
+            loja: "Jardim Paulista - Matriz",
+            departamento: "Contas a pagar",
+            Teams:"financeiromatriz134@outlook.com.br" ,
+            Webex: "financeiromatriz134@outlook.com.br"
+        },
+        {
+            nome: "Henrique1",
+            ramal: "2754",
+            Whatsapp:"",
+            loja: "Jardim Paulista - Matriz",
+            departamento: "Recebimento - Perecíveis",
+            Teams:"" ,
+            Webex: ""
+        },
+         {
+            nome: "Rosiane",
+            ramal: "2747",
+            Whatsapp:"",
+            loja: "Jardim Paulista - Matriz",
+            departamento: "Contas a pagar",
+            Teams:"financeiromatriz170@outlook.com" ,
+            Webex: "financeiromatriz170@outlook.com"
+        },
+        {
+            nome: "Taís",
+            ramal: "2747",
+            Whatsapp:"",
+            loja: "Jardim Paulista - Matriz",
+            departamento: "Contas a pagar",
+            Teams:"financeiromatriz164@hotmail.com" ,
+            Webex: "financeiromatriz164@hotmail.com"
+        },
+         {
+            nome: "Juliana",
+            ramal: "2747",
+            Whatsapp:"",
+            loja: "Jardim Paulista - Matriz",
+            departamento: "Marketing",
+            Teams:"marketingmatriz_172@outlook.com.br" ,
+            Webex: "marketingmatriz_172@outlook.com.br"
+        },
+        {
+            nome: "Aline",
+            ramal: "2746",
+            Whatsapp:"",
+            loja: "Jardim Paulista - Matriz",
+            departamento: "Nutrição",
+            Teams:"nutricaomatriz159@outlook.com.br" ,
+            Webex: "nutricaomatriz159@outlook.com.br"
+        },
+         {
+            nome: "Fabiana",
+            ramal: "3668-6904",
+            Whatsapp:"",
+            loja: "Campos do Jordão - Loja 3",
+            departamento: "RH - Recursos Humanos",
+            Teams:"nutricaomatriz159@outlook.com.br" ,
+            Webex: "nutricaomatriz159@outlook.com.br"
+        },
+        {
+            nome: "Jurandir",
+            ramal: "2742",
+            Whatsapp:"",
+            loja: "Jardim Paulista - Matriz",
+            departamento: "RH - Recursos Humanos",
+            Teams:"pirarh45@outlook.com" ,
+            Webex: "pirarh45@outlook.com"
+        },
+         {
+            nome: "Roseni",
+            ramal: "39358211",
+            Whatsapp:"",
+            loja: "Jardim Satélite - Loja 2",
+            departamento: "RH - Recursos Humanos",
+            Teams:"pirarhsatelite104@hotmail.com" ,
+            Webex: "pirarhsatelite104@hotmail.com"
+        },
+        {
+            nome: "Elenice",
+            ramal: "2753",
+            Whatsapp:"",
+            loja: "Jardim Paulista - Matriz",
+            departamento: "Contabilidade",
+            Teams:"contabilidadematriz140@hotmail.com" ,
+            Webex: "contabilidadematriz140@hotmail.com"
+        },
+        {
+            nome: "Patrícia",
+            ramal: "2764",
+            Whatsapp:"",
+            loja: "Jardim Paulista - Matriz",
+            departamento: "Marketing",
+            Teams: "marketingmatriz_180@hotmail.com",
+            Webex: "marketingmatriz_180@hotmail.com"
+        },
+	{
+            nome: "Everton",
+            ramal: "2747",
+            Whatsapp:"",
+            loja: "Jardim Paulista - Matriz",
+            departamento: "Contas a pagar",
+            Teams: " financeiromatriz120@hotmail.com",
+            Webex: " financeiromatriz120@hotmail.com"
+        },
+        {
+            nome: "Marketing",
+            ramal: "2764",
+            Whatsapp:"12997181168",
+            loja: "Jardim Paulista - Matriz",
+            departamento: "Marketing",
+            Teams: "",
+            Webex: ""
+        },
+         {
+            nome: "Nutrição",
+            ramal: "2746",
+            Whatsapp:"12996241583",
+            loja: "Jardim Paulista - Matriz",
+            departamento: "Nutrição",
+            Teams: "",
+            Webex: ""
+        },
+        {
+            nome: "Carol",
+            ramal: "2746",
+            Whatsapp:"12996241583",
+            loja: "Jardim Paulista - Matriz",
+            departamento: "Nutrição",
+            Teams: "nutricaomatriz158@hotmail.com",
+            Webex: "nutricaomatriz158@hotmail.com"
+        },
+         {
+                nome: "Neide",
+                ramal: "2732 - (direto)",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "Contas a Pagar",
+                Teams: "",
+                Webex: ""
+            },
+            {
+                nome: "Contabilidade",
+                ramal: "2732 - (direto)",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "Contas a Pagar",
+                Teams: "",
+                Webex: ""
+            },
+            
+            {
+                nome: "Débora",
+                ramal: "2753",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "Contabilidade",
+                Teams: "contabilidadematriz177@hotmail.com",
+                Webex: "contabilidadematriz177@hotmail.com"
+            },
+             {
+                nome: "Sueli",
+                ramal: "2731 - (direto)",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "Contas a pagar",
+                Teams: "",
+                Webex: ""
+            },
+            {
+                nome: "Cintia",
+                ramal: "2736 - (direto)",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "Contas a pagar",
+                Teams: "",
+                Webex: "financeiromatriz49@outlook.com.br"
+            },
+            {
+                nome: "Ana",
+                ramal: "2747",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "Contas a pagar",
+                Teams: "",
+                Webex: "financeiromatriz171@outlook.com"
+            },
+            {
+                nome: "Tatielen",
+                ramal: "2730 - (direto)",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "Compras",
+                Teams: "piracompras89@outlook.com",
+                Webex: "piracompras89@outlook.com"
+            },
+            {
+                nome: "Renato",
+                ramal: "2734",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "Compras",
+                Teams: "piracompras95@outlook.com",
+                Webex: "piracompras95@outlook.com"
+            },
+              {
+                nome: "Renan",
+                ramal: "2734",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "Compras",
+                Teams: "",
+                Webex: ""
+            },
+            {
+                nome: "Ronaldo",
+                ramal: "2735",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "Compras",
+                Teams: "",
+                Webex: ""
+            },
+              {
+                nome: "Ricardo",
+                ramal: "2740",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "Compras",
+                Teams: "piracompras82@outlook.com",
+                Webex: "piracompras82@outlook.com"
+            },
+            {
+                nome: "Reginaldo",
+                ramal: "2745",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "Compras",
+                Teams: "",
+                Webex: ""
+            },
+              {
+                nome: "Joyce",
+                ramal: "2752",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "Compras",
+                Teams: "piracompras91@outlook.com",
+                Webex: "piracompras91@outlook.com"
+            },
+            {
+                nome: "Chuluck",
+                ramal: "2765",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "Compras",
+                Teams: "",
+                Webex: ""
+            },
+              {
+                nome: "Diogo",
+                ramal: "2767",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "Compras",
+                Teams: "piracompras80@outlook.com",
+                Webex: "piracompras80@outlook.com"
+            },
+            {
+                nome: "Thiago",
+                ramal: "2771",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "Compras",
+                Teams: "piracompras96@outlook.com",
+                Webex: "piracompras96@outlook.com"
+            },
+            {
+                nome: "Oscar",
+                ramal: "2739",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "CPD - Centro de Processamento de Dados",
+                Teams: "",
+                Webex: ""
+            },
+            {
+                nome: "Rogério",
+                ramal: "2738",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "CPD - Centro de Processamento de Dados",
+                Teams: "",
+                Webex: "rogerio@comprepiratininga.com.br"
+            },
+            {
+                nome: "Cristiane",
+                ramal: "2738",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "CPD - Centro de Processamento de Dados",
+                Teams: "",
+                Webex: "piracpd67@outlook.com.br"
+            },
+              {
+                nome: "Henrique",
+                ramal: "2764",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "Marketing",
+                Teams: "marketingmatriz52@hotmail.com",
+                Webex: "marketingmatriz52@hotmail.com"
+            },
+            {
+                nome: "Elisa",
+                ramal: "2761",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Marketing",
+                departamento: "Marketing",
+                Teams: "marketingmatriz40@hotmail.com",
+                Webex: "marketingmatriz40@hotmail.com"
+            },
+            {
+                nome: "Silvana",
+                ramal: "2761",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "Marketing",
+                Teams: "",
+                Webex: ""
+            },
+            {
+                nome: "Sala de Reunião",
+                ramal: "2762",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "Sala de Reunião",
+                Teams: "",
+                Webex: ""
+            },
+            {
+                nome: "Frente de caixa",
+                ramal: "2758",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "Fiscal de caixa",
+                Teams: "",
+                Webex: ""
+            },
+             {
+                nome: "Paula",
+                ramal: "2757",
+                Whatsapp:"12981455566",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "Drive - Nota Fiscal",
+                Teams: "notafiscalmatriz116@outlook.com",
+                Webex: "notafiscalmatriz116@outlook.com"
+            },
+             {
+                nome: "Mônica",
+                ramal: "2757",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "Drive - Nota Fiscal",
+                Teams: "notafiscalmatriz107@outlook.com",
+                Webex: "notafiscalmatriz107@outlook.com"
+            },
+             {
+                nome: "Rosangela",
+                ramal: "2741",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "Tesouraria",
+                Teams: "financeiromatriz20@hotmail.com",
+                Webex: "financeiromatriz20@hotmail.com"
+            },
+             {
+                nome: "Solange",
+                ramal: "2737 - (direto)",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "Farmácia",
+                Teams: "farmacia@mercadinhopiratininga.com.br",
+                Webex: ""
+            },
+             {
+                nome: "Farmácia",
+                ramal: "2748",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "Farmácia",
+                Teams: "",
+                Webex: ""
+            },
+             {
+                nome: "Gilda",
+                ramal: "2742",
+                Whatsapp:"12996126890",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "RH - Recursos Humano",
+                Teams: "",
+                Webex: "pirarh199@outlook.com"
+            },
+             {
+                nome: "RH",
+                ramal: "2742",
+                Whatsapp:"12996126890",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "RH - Recursos Humano",
+                Teams: "",
+                Webex: ""
+            },
+             {
+                nome: "Vinicius",
+                ramal: "2766",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "RH - Recursos Humano",
+                Teams: "",
+                Webex: ""
+            },
+             {
+                nome: "Kleyton",
+                ramal: "2744",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "Recebimento",
+                Teams: "pirarecebimentomatriz127@outlook.com",
+                Webex: "pirarecebimentomatriz127@outlook.com"
+            },
+            {
+                nome: "Recebimento",
+                ramal: "2744",
+                Whatsapp:"12981132377",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "Recebimento",
+                Teams: "",
+                Webex: ""
+            },
+             {
+                nome: "RoseRecebimento",
+                ramal: "2744",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "Recebimento",
+                Teams: "recebimento_paulista2@outlook.com",
+                Webex: "pirarecebimentomatriz125@outlook.com"
+            },
+             {
+                nome: "Tião",
+                ramal: "2744",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "Recebimento",
+                Teams: "",
+                Webex: ""
+            },
+              {
+                nome: "Açougue",
+                ramal: "2754",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "Açougue",
+                Teams: "",
+                Webex: ""
+            },
+             {
+                nome: "Junior",
+                ramal: "2763",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "Sal de Pedidos",
+                Teams: "pirapedidos33@outlook.com",
+                Webex: "pirapedidos33@outlook.com"
+            },
+              {
+                nome: "Sivaldo",
+                ramal: "2763",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "Sala de Pedidos",
+                Teams: "pirapedidos88@outlook.com",
+                Webex: "pirapedidos88@outlook.com"
+            },
+             {
+                nome: "Washington",
+                ramal: "2763",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "Sala de Pedidos",
+                Teams: "pedidos243@hotmail.com",
+                Webex: "pedidos243@hotmail.com"
+            },
+              {
+                nome: "Entrada de Funcionários",
+                ramal: "2770",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "Entrada de Funcionários",
+                Teams: "",
+                Webex: ""
+            },
+             {
+                nome: "Campos",
+                ramal: "(12)3662-2205",
+                Whatsapp:"",
+                loja: "Campos do Jordão - SP",
+                departamento: "",
+                Teams: "",
+                Webex: ""
+            },
+            {
+                nome: "Farmácia de Campos",
+                ramal: "(12)3663-6909",
+                Whatsapp:"",
+                loja: "Campos do Jordão - SP",
+                departamento: "Farmácia",
+                Teams: "",
+                Webex: ""
+            },
+            {
+                nome: "Paraibuna",
+                ramal: "(12)3974-0106",
+                Whatsapp:"",
+                loja: "Paraibuna",
+                departamento: "Balcão de Atendimento",
+                Teams: "",
+                Webex: ""
+            },
+            {
+                nome: "Caraguá",
+                ramal: "(12)3888-4035",
+                Whatsapp:"",
+                loja: "araguatatuba",
+                departamento: "Balcão de Atendimento",
+                Teams: "",
+                Webex: ""
+            },
+            {
+                nome: "Matriz Garagem",
+                ramal: "(12)3911-9298",
+                Whatsapp:"",
+                loja: "",
+                departamento: "",
+                Teams: "",
+                Webex: ""
+            },
+             {
+                nome: "Galpão troca",
+                ramal: "(12)3911-4682",
+                Whatsapp:"",
+                loja: "",
+                departamento: "",
+                Teams: "",
+                Webex: ""
+            },
+             {
+                nome: "Compras",
+                ramal: "2730",
+                Whatsapp:"12981239862",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "Compras",
+                Teams: "",
+                Webex: ""
+            },
+            {
+                nome: "Edson",
+                ramal: "2756",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "Mata Burro",
+                Teams: "",
+                Webex: ""
+            },
+             {
+                nome: "Mata Burro",
+                ramal: "2756",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "Mata Burro",
+                Teams: "",
+                Webex: ""
+            },
+             {
+                nome: "Balcão",
+                ramal: "2749",
+                Whatsapp:"",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "Balcão de Atendimento",
+                Teams: "",
+                Webex: ""
+            },
+             {
+                nome: "Bruno",
+                ramal: "2742",
+                Whatsapp:"12996126890",
+                loja: "Jardim Paulista - Matriz",
+                departamento: "RH - Recursos Humanos",
+                Teams: "pirarh87@outlook.com",
+                Webex: "pirarh87@outlook.com"
+            },
+            {
+                nome: "",
+                ramal: "",
+                Whatsapp:"",
+                loja: "",
+                departamento: "",
+                Teams: "",
+                Webex: ""
+            },
+            {
+                nome: "",
+                ramal: "",
+                Whatsapp:"",
+                loja: "",
+                departamento: "",
+                Teams: "",
+                Webex: ""
+            },
+            {
+                nome: "",
+                ramal: "",
+                Whatsapp:"",
+                loja: "",
+                departamento: "",
+                Teams: "",
+                Webex: ""
+            }
+    ];
+
+    function removerAcentos(texto) {
+        return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
+
+    function verificarEnter(event) {
+        if (event.key === "Enter") {
+            buscarUsuario();  // Chama a função de busca quando pressionar Enter
+        }
+    }
+
+    function buscarUsuario() {
+        const input = document.getElementById("nomeUsuario");
+        const nomeDigitado = removerAcentos(input.value.trim().toLowerCase());
+        const resultadoDiv = document.getElementById("resultado");
+
+        input.value = ""; // limpa o campo
+
+        const usuarioEncontrado = usuarios.find(u =>
+            removerAcentos(u.nome.toLowerCase()).includes(nomeDigitado)
+        );
+
+        if (usuarioEncontrado) {
+            resultadoDiv.innerHTML = `
+                <div class="resultado">
+                    <strong><i class="fas fa-user"></i> Nome:</strong> ${usuarioEncontrado.nome}<br>
+                    <strong><i class="fas fa-phone"></i> Ramal:</strong> ${usuarioEncontrado.ramal}<br>                       
+                    <i class="fab fa-whatsapp" style="color:#25D366;"> </i>  &nbsp; <strong> WhatsApp: </strong>
+                    <a href="https://wa.me/55${usuarioEncontrado.Whatsapp}" target="_blank">${usuarioEncontrado.Whatsapp}</a><br>
+                    <strong><i class="fas fa-store"></i> Loja:</strong> ${usuarioEncontrado.loja}<br>
+                    <strong><i class="fas fa-building"></i> Departamento:</strong> ${usuarioEncontrado.departamento}<br>
+                    <strong><i class="fas fa-comments"></i> Teams: </strong> ${usuarioEncontrado.Teams}<br>
+                    <strong><i class="fas fa-video"></i> Webex: </strong> ${usuarioEncontrado.Webex}
+                </div>
+            `;
+        } else {
+            resultadoDiv.innerHTML = `
+                <div class="erro">
+                    Usuário não encontrado. Tente novamente.
+                </div>
+            `;
+        }
+    }
+</script>
+
+</body>
+</html>
